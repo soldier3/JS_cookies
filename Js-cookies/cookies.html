@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+                var urlParams;
+            (window.onpopstate = function () {
+                var match,
+                    pl     = /\+/g,  // Regex for replacing addition symbol with a space
+                    search = /([^&=]+)=?([^&]*)/g,
+                    decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+                    query  = window.location.search.substring(1);
+
+                urlParams = {};
+                
+                while (match = search.exec(query))
+                urlParams[decode(match[1])] = decode(match[2]);
+            })();
+
+            for(kay in urlParams){
+                var exdate=new Date();
+                exdate.setDate(exdate.getDate() + 1 );  
+                var name = kay;
+                 document.cookie=encodeURIComponent(name) 
+                     + "=" + encodeURIComponent(urlParams[name])
+                     +  "; expires="+exdate.toUTCString();
+            }
+            
+            if (!navigator.cookieEnabled) {
+                alert( 'Для цього тестового завдання, включіть cookie в браузері :-)' );
+            }   else{
+                alert('cookie = '+ document.cookie);
+            }
+    </script>
+</body>
+</html>
